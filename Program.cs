@@ -8,12 +8,13 @@ namespace Coroutines
     {
         static void Main(string[] args)
         {
-            var coordinator = new Coordinator { 
+            var coordinator = new Coordinator<string>(
                 Coroutines.FirstCoroutine,
                 Coroutines.SecondCoroutine,
-                Coroutines.ThirdCoroutine
-            };
-            coordinator.Start();
+                Coroutines.ThirdCoroutine);
+            
+            string finalResult = coordinator.Start("m1");
+            Console.WriteLine("Final result: {0}", finalResult); 
 
             Console.WriteLine("Press Enter to finish");
             Console.ReadLine();

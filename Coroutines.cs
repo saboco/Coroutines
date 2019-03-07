@@ -1,50 +1,55 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Coroutines
 {
     public class Coroutines
     {
-        public static async void FirstCoroutine(Coordinator coordinator)
+        public static async Task<string> FirstCoroutine(Coordinator<string> coordinator, string initialValue)
         {
-            Console.WriteLine("Starting FirstCoroutine");
+            Console.WriteLine("Starting FirstCoroutine with initial value {0}", initialValue);
             Console.WriteLine("Yielding from FirstCoroutine…");
 
-            await coordinator;
-
-            Console.WriteLine("Returned to FirstCoroutine");
+            string received = await coordinator.Yield("x1");
+            Console.WriteLine("Returned to FirstCoroutine with value {0}", received);
             Console.WriteLine("Yielding from FirstCoroutine again…");
 
-            await coordinator;
+            received = await coordinator.Yield("x2");;
 
-            Console.WriteLine("Returned to FirstCoroutine again");
+            Console.WriteLine("Returned to FirstCoroutine again with value {0}", received);
             Console.WriteLine("Finished FirstCoroutine");
+
+            return "x3";
         } 
 
-        public static async void SecondCoroutine(Coordinator coordinator)
+        public static async Task<string> SecondCoroutine(Coordinator<string> coordinator, string initialValue)
         {
-            Console.WriteLine("Starting SecondCoroutine");
+            Console.WriteLine("Starting SecondCoroutine with initial value {0}", initialValue);
             Console.WriteLine("Yielding from SecondCoroutine…");
 
-            await coordinator;
-
-            Console.WriteLine("Returned to SecondCoroutine");
+            string received = await coordinator.Yield("y1");
+            Console.WriteLine("Returned to SecondCoroutine with value {0}", received);
             Console.WriteLine("Yielding from SecondCoroutine again…");
 
-            await coordinator;
+            received = await coordinator.Yield("y2");
 
-            Console.WriteLine("Returned to SecondCoroutine again");
+            Console.WriteLine("Returned to SecondCoroutine again with value {0}", received);
             Console.WriteLine("Finished SecondCoroutine");
+
+            return "y3";
         } 
 
-        public static async void ThirdCoroutine(Coordinator coordinator)
+        public static async Task<string> ThirdCoroutine(Coordinator<string> coordinator, string initialValue)
         {
-            Console.WriteLine("Starting ThirdCoroutine");
+            Console.WriteLine("Starting ThirdCoroutine with initial value {0}", initialValue);
             Console.WriteLine("Yielding from ThirdCoroutine…");
 
-            await coordinator;
+            string received = await coordinator.Yield("z1");
 
-            Console.WriteLine("Returned to ThirdCoroutine again");
+            Console.WriteLine("Returned to ThirdCoroutine again with value {0}", received);
             Console.WriteLine("Finished ThirdCoroutine");
+
+            return "z2";
         } 
     }
 }
